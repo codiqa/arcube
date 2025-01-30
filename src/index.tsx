@@ -5,6 +5,7 @@ import { App } from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "@/contexts";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Redirect } from "./Redirect";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,6 +16,8 @@ root.render(
       <AuthProvider>
         <Routes>
           <Route path="/" element={<App />} />
+
+          <Route path="/:shortUrl" element={<Redirect />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

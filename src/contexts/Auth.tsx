@@ -13,6 +13,8 @@ type Nullable<T> = T | null;
 type AuthContextType = {
   isLoading: boolean;
   isAuthenticated: boolean;
+  accessToken?: Nullable<string>;
+  refreshToken?: Nullable<string>;
   authError: Nullable<AuthError>;
 
   onSignIn: (payload: { email: string; password: string }) => void;
@@ -21,6 +23,8 @@ type AuthContextType = {
 export const AuthContext = createContext<AuthContextType>({
   isLoading: false,
   isAuthenticated: false,
+  accessToken: null,
+  refreshToken: null,
   authError: null,
   onSignIn: () => null,
 });
@@ -70,6 +74,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider
       value={{
         isAuthenticated: !!session,
+        accessToken: session?.access_token,
+        refreshToken:session?.refresh_token,
         onSignIn,
         authError,
         isLoading,
