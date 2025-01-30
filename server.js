@@ -2,6 +2,7 @@ const express = require("express");
 const { get, replace, isEmpty } = require("lodash");
 const { createClient } = require("@supabase/supabase-js");
 const path = require("path");
+const { isUrlValid, getShortenUrl } = require("./utils");
 
 require("dotenv").config(); // Load environment variables
 
@@ -13,26 +14,6 @@ const supabase = createClient(
 const app = express();
 
 app.use(express.json());
-
-const isUrlValid = (url) => {
-  try {
-    new URL(url);
-    return true;
-  } catch (error) {
-    return false;
-  }
-};
-
-const getShortenUrl = () => {
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-  let result = "";
-
-  for (let i = 0; i < 6; i++) {
-    result += letters.charAt(Math.floor(Math.random() * letters.length));
-  }
-
-  return result;
-};
 
 app.post("/shorten", async (req, res) => {
   try {
@@ -78,10 +59,10 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-const PORT = process.env.PORT || 3001;
+// const PORT = process.env.PORT || 3001; // Use dynamic port
+// app.listen(PORT, () => {
+//   console.log(`Backend running on http://localhost:${PORT}`);
+// });
 
-app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
-});
-
-module.exports = { app, isUrlValid, getShortenUrl };
+// module.exports = { app, isUrlValid, getShortenUrl };
+module.exports = app;

@@ -1,6 +1,7 @@
 const request = require("supertest");
 const { createClient } = require("@supabase/supabase-js");
-const { app, isUrlValid, getShortenUrl } = require("./server"); // Import functions
+const app = require("./server"); // Import functions
+const { isUrlValid, getShortenUrl } = require("./utils");
 
 jest.mock("@supabase/supabase-js");
 
